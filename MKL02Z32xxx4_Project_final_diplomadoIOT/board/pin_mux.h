@@ -50,10 +50,19 @@ void BOARD_InitBootPins(void);
   @{ */
 
 /* Symbols to be used with PORT driver */
-#define BOARD_INITPINS_Potenciometro_PORT PORTB               /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_Potenciometro_PIN 9U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_Potenciometro_PIN_MASK (1U << 9U)      /*!<@brief PORT pin mask */
-                                                              /* @} */
+#define BOARD_INITPINS_Potenciometro1_PORT PORTB               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_Potenciometro1_PIN 9U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_Potenciometro1_PIN_MASK (1U << 9U)      /*!<@brief PORT pin mask */
+                                                               /* @} */
+
+/*! @name PORTB13 (number 29), J10[3]/ADC0_SE13
+  @{ */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_Potenciometro2_PORT PORTB                /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_Potenciometro2_PIN 13U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_Potenciometro2_PIN_MASK (1U << 13U)      /*!<@brief PORT pin mask */
+                                                                /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
