@@ -14,7 +14,8 @@ mcu_data: ksdk2_0
 processor_version: 8.0.1
 board: FRDM-KL02Z
 pin_labels:
-- {pin_num: '12', pin_signal: ADC0_SE10/PTB9, label: 'J10[2]/ADC0_SE10', identifier: Potenciometro}
+- {pin_num: '12', pin_signal: ADC0_SE10/PTB9, label: 'J10[2]/ADC0_SE10', identifier: Potenciometro;Potenciometro1}
+- {pin_num: '29', pin_signal: ADC0_SE13/PTB13/TPM1_CH1, label: 'J10[3]/ADC0_SE13', identifier: Potenciometro2}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -42,7 +43,8 @@ BOARD_InitPins:
 - pin_list:
   - {pin_num: '17', peripheral: UART0, signal: TX, pin_signal: ADC0_SE5/CMP0_IN3/PTB1/IRQ_6/UART0_TX/UART0_RX}
   - {pin_num: '18', peripheral: UART0, signal: RX, pin_signal: ADC0_SE4/PTB2/IRQ_7/UART0_RX/UART0_TX}
-  - {pin_num: '12', peripheral: ADC0, signal: 'SE, 13', pin_signal: ADC0_SE10/PTB9}
+  - {pin_num: '12', peripheral: ADC0, signal: 'SE, 13', pin_signal: ADC0_SE10/PTB9, identifier: Potenciometro1}
+  - {pin_num: '29', peripheral: ADC0, signal: 'SE, 16', pin_signal: ADC0_SE13/PTB13/TPM1_CH1}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -61,11 +63,14 @@ void BOARD_InitPins(void)
     /* PORTB1 (pin 17) is configured as UART0_TX */
     PORT_SetPinMux(BOARD_INITPINS_DEBUG_UART0_TX_PORT, BOARD_INITPINS_DEBUG_UART0_TX_PIN, kPORT_MuxAlt2);
 
+    /* PORTB13 (pin 29) is configured as ADC0_SE13 */
+    PORT_SetPinMux(BOARD_INITPINS_Potenciometro2_PORT, BOARD_INITPINS_Potenciometro2_PIN, kPORT_PinDisabledOrAnalog);
+
     /* PORTB2 (pin 18) is configured as UART0_RX */
     PORT_SetPinMux(BOARD_INITPINS_DEBUG_UART0_RX_PORT, BOARD_INITPINS_DEBUG_UART0_RX_PIN, kPORT_MuxAlt2);
 
     /* PORTB9 (pin 12) is configured as ADC0_SE10 */
-    PORT_SetPinMux(BOARD_INITPINS_Potenciometro_PORT, BOARD_INITPINS_Potenciometro_PIN, kPORT_PinDisabledOrAnalog);
+    PORT_SetPinMux(BOARD_INITPINS_Potenciometro1_PORT, BOARD_INITPINS_Potenciometro1_PIN, kPORT_PinDisabledOrAnalog);
 
     SIM->SOPT5 = ((SIM->SOPT5 &
                    /* Mask bits to zero which are setting */
