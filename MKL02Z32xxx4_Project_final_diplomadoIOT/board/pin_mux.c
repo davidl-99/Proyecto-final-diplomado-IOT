@@ -14,13 +14,17 @@ mcu_data: ksdk2_0
 processor_version: 8.0.1
 board: FRDM-KL02Z
 pin_labels:
-- {pin_num: '12', pin_signal: ADC0_SE10/PTB9, label: 'J10[2]/ADC0_SE10', identifier: Potenciometro}
+- {pin_num: '12', pin_signal: ADC0_SE10/PTB9, label: 'J10[2]/ADC0_SE10', identifier: Potenciometro;Potenciometro1;trigger2}
+- {pin_num: '19', pin_signal: ADC0_SE3/PTA8/I2C1_SCL, label: 'J10[6]/ADC0_SE3/I2C1_SCL', identifier: echo1}
+- {pin_num: '20', pin_signal: ADC0_SE2/PTA9/I2C1_SDA, label: 'J10[5]/ADC0_SE2/I2C1_SDA', identifier: trigger1}
+- {pin_num: '29', pin_signal: ADC0_SE13/PTB13/TPM1_CH1, label: 'J10[3]/ADC0_SE13', identifier: Potenciometro2;echo2}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
 
 #include "fsl_common.h"
 #include "fsl_port.h"
+#include "fsl_gpio.h"
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
@@ -42,7 +46,10 @@ BOARD_InitPins:
 - pin_list:
   - {pin_num: '17', peripheral: UART0, signal: TX, pin_signal: ADC0_SE5/CMP0_IN3/PTB1/IRQ_6/UART0_TX/UART0_RX}
   - {pin_num: '18', peripheral: UART0, signal: RX, pin_signal: ADC0_SE4/PTB2/IRQ_7/UART0_RX/UART0_TX}
-  - {pin_num: '12', peripheral: ADC0, signal: 'SE, 13', pin_signal: ADC0_SE10/PTB9}
+  - {pin_num: '19', peripheral: GPIOA, signal: 'GPIO, 8', pin_signal: ADC0_SE3/PTA8/I2C1_SCL, direction: INPUT}
+  - {pin_num: '20', peripheral: GPIOA, signal: 'GPIO, 9', pin_signal: ADC0_SE2/PTA9/I2C1_SDA, direction: OUTPUT}
+  - {pin_num: '29', peripheral: GPIOB, signal: 'GPIO, 13', pin_signal: ADC0_SE13/PTB13/TPM1_CH1, identifier: echo2, direction: INPUT}
+  - {pin_num: '12', peripheral: GPIOB, signal: 'GPIO, 9', pin_signal: ADC0_SE10/PTB9, identifier: trigger2, direction: OUTPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -55,17 +62,56 @@ BOARD_InitPins:
  * END ****************************************************************************************************************/
 void BOARD_InitPins(void)
 {
+    /* Port A Clock Gate Control: Clock enabled */
+    CLOCK_EnableClock(kCLOCK_PortA);
     /* Port B Clock Gate Control: Clock enabled */
     CLOCK_EnableClock(kCLOCK_PortB);
+
+    gpio_pin_config_t echo1_config = {
+        .pinDirection = kGPIO_DigitalInput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTA8 (pin 19)  */
+    GPIO_PinInit(BOARD_INITPINS_echo1_GPIO, BOARD_INITPINS_echo1_PIN, &echo1_config);
+
+    gpio_pin_config_t trigger1_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTA9 (pin 20)  */
+    GPIO_PinInit(BOARD_INITPINS_trigger1_GPIO, BOARD_INITPINS_trigger1_PIN, &trigger1_config);
+
+    gpio_pin_config_t trigger2_config = {
+        .pinDirection = kGPIO_DigitalOutput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTB9 (pin 12)  */
+    GPIO_PinInit(BOARD_INITPINS_trigger2_GPIO, BOARD_INITPINS_trigger2_PIN, &trigger2_config);
+
+    gpio_pin_config_t echo2_config = {
+        .pinDirection = kGPIO_DigitalInput,
+        .outputLogic = 0U
+    };
+    /* Initialize GPIO functionality on pin PTB13 (pin 29)  */
+    GPIO_PinInit(BOARD_INITPINS_echo2_GPIO, BOARD_INITPINS_echo2_PIN, &echo2_config);
+
+    /* PORTA8 (pin 19) is configured as PTA8 */
+    PORT_SetPinMux(BOARD_INITPINS_echo1_PORT, BOARD_INITPINS_echo1_PIN, kPORT_MuxAsGpio);
+
+    /* PORTA9 (pin 20) is configured as PTA9 */
+    PORT_SetPinMux(BOARD_INITPINS_trigger1_PORT, BOARD_INITPINS_trigger1_PIN, kPORT_MuxAsGpio);
 
     /* PORTB1 (pin 17) is configured as UART0_TX */
     PORT_SetPinMux(BOARD_INITPINS_DEBUG_UART0_TX_PORT, BOARD_INITPINS_DEBUG_UART0_TX_PIN, kPORT_MuxAlt2);
 
+    /* PORTB13 (pin 29) is configured as PTB13 */
+    PORT_SetPinMux(BOARD_INITPINS_echo2_PORT, BOARD_INITPINS_echo2_PIN, kPORT_MuxAsGpio);
+
     /* PORTB2 (pin 18) is configured as UART0_RX */
     PORT_SetPinMux(BOARD_INITPINS_DEBUG_UART0_RX_PORT, BOARD_INITPINS_DEBUG_UART0_RX_PIN, kPORT_MuxAlt2);
 
-    /* PORTB9 (pin 12) is configured as ADC0_SE10 */
-    PORT_SetPinMux(BOARD_INITPINS_Potenciometro_PORT, BOARD_INITPINS_Potenciometro_PIN, kPORT_PinDisabledOrAnalog);
+    /* PORTB9 (pin 12) is configured as PTB9 */
+    PORT_SetPinMux(BOARD_INITPINS_trigger2_PORT, BOARD_INITPINS_trigger2_PIN, kPORT_MuxAsGpio);
 
     SIM->SOPT5 = ((SIM->SOPT5 &
                    /* Mask bits to zero which are setting */
