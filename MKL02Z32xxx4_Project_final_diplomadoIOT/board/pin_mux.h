@@ -46,23 +46,61 @@ void BOARD_InitBootPins(void);
 #define BOARD_INITPINS_DEBUG_UART0_RX_PIN_MASK (1U << 2U)      /*!<@brief PORT pin mask */
                                                                /* @} */
 
-/*! @name PORTB9 (number 12), J10[2]/ADC0_SE10
+/*! @name PORTA8 (number 19), J10[6]/ADC0_SE3/I2C1_SCL
   @{ */
 
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_echo1_FGPIO FGPIOA             /*!<@brief FGPIO peripheral base pointer */
+#define BOARD_INITPINS_echo1_GPIO GPIOA               /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_echo1_GPIO_PIN_MASK (1U << 8U) /*!<@brief GPIO pin mask */
+
 /* Symbols to be used with PORT driver */
-#define BOARD_INITPINS_Potenciometro1_PORT PORTB               /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_Potenciometro1_PIN 9U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_Potenciometro1_PIN_MASK (1U << 9U)      /*!<@brief PORT pin mask */
-                                                               /* @} */
+#define BOARD_INITPINS_echo1_PORT PORTA               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_echo1_PIN 8U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_echo1_PIN_MASK (1U << 8U)      /*!<@brief PORT pin mask */
+                                                      /* @} */
+
+/*! @name PORTA9 (number 20), J10[5]/ADC0_SE2/I2C1_SDA
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_trigger1_FGPIO FGPIOA             /*!<@brief FGPIO peripheral base pointer */
+#define BOARD_INITPINS_trigger1_GPIO GPIOA               /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_trigger1_GPIO_PIN_MASK (1U << 9U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_trigger1_PORT PORTA               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_trigger1_PIN 9U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_trigger1_PIN_MASK (1U << 9U)      /*!<@brief PORT pin mask */
+                                                         /* @} */
 
 /*! @name PORTB13 (number 29), J10[3]/ADC0_SE13
   @{ */
 
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_echo2_FGPIO FGPIOB              /*!<@brief FGPIO peripheral base pointer */
+#define BOARD_INITPINS_echo2_GPIO GPIOB                /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_echo2_GPIO_PIN_MASK (1U << 13U) /*!<@brief GPIO pin mask */
+
 /* Symbols to be used with PORT driver */
-#define BOARD_INITPINS_Potenciometro2_PORT PORTB                /*!<@brief PORT peripheral base pointer */
-#define BOARD_INITPINS_Potenciometro2_PIN 13U                   /*!<@brief PORT pin number */
-#define BOARD_INITPINS_Potenciometro2_PIN_MASK (1U << 13U)      /*!<@brief PORT pin mask */
-                                                                /* @} */
+#define BOARD_INITPINS_echo2_PORT PORTB                /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_echo2_PIN 13U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_echo2_PIN_MASK (1U << 13U)      /*!<@brief PORT pin mask */
+                                                       /* @} */
+
+/*! @name PORTB9 (number 12), J10[2]/ADC0_SE10
+  @{ */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITPINS_trigger2_FGPIO FGPIOB             /*!<@brief FGPIO peripheral base pointer */
+#define BOARD_INITPINS_trigger2_GPIO GPIOB               /*!<@brief GPIO peripheral base pointer */
+#define BOARD_INITPINS_trigger2_GPIO_PIN_MASK (1U << 9U) /*!<@brief GPIO pin mask */
+
+/* Symbols to be used with PORT driver */
+#define BOARD_INITPINS_trigger2_PORT PORTB               /*!<@brief PORT peripheral base pointer */
+#define BOARD_INITPINS_trigger2_PIN 9U                   /*!<@brief PORT pin number */
+#define BOARD_INITPINS_trigger2_PIN_MASK (1U << 9U)      /*!<@brief PORT pin mask */
+                                                         /* @} */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.
